@@ -4,14 +4,18 @@
 
 int main()
 {
-	 InitWindow(400, 400, "Platformer");
+     SetTargetFPS(100);
+	 InitWindow(800, 800, "Platformer");
 
      Platformer::GameManager Game;
      
      while (!WindowShouldClose()) {
          BeginDrawing();
+         Game.updateGame();
          Game.drawScreen();
+         
          Game.movePlayer();
+         
          EndDrawing();
      }
      CloseWindow();

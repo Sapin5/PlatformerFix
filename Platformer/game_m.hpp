@@ -13,10 +13,9 @@ namespace Platformer {
 		void drawScreen();
 
 		void movePlayer();
+		void updateGame();
 	};
 	//drawing
-	
-	
 
 	//updating
 }

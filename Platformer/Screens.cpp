@@ -11,9 +11,13 @@ namespace Platformer {
 		screen_width = screenX;
 	}
 
+	screen::GameState screen::getState() const {
+		return currentState;
+	}
+
 	void screen::update(char ch) {
 		if (ch == 'p') {
-			currentState = GameState::Play;
+			pause = true;
 		}
 	}
 
@@ -25,7 +29,6 @@ namespace Platformer {
 			break;
 		case GameState::Play:
 			ClearBackground(RAYWHITE);
-			drawPlayer();
 			break;
 		case GameState::Loss:
 			if (homeButton.drawButton()) currentState = GameState::Home;
@@ -38,8 +41,11 @@ namespace Platformer {
 		}
 	}
 
-	void screen::drawPlayer() {
-		player.drawPlayer();
+	void screen::drawPlayer(player& player) {
 		player.drawActor();
+	}
+
+	void screen::drawActor(Actor& actor) {
+		actor.drawActor();
 	}
 }

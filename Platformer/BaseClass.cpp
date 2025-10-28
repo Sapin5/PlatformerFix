@@ -10,6 +10,6 @@ void Base::toggleGravity(bool enable) {
 
 void Base::applyGravity() {
 	if (enableGravity) {
-		velocity.y = velocity.y - gravity * (GetFrameTime() * GetFrameTime() / 2);
+		velocity.y += gravity * GetFrameTime();
 	}
 }

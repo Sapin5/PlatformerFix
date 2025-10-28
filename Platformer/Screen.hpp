@@ -6,8 +6,10 @@
 namespace Platformer {
 	class screen {
 	public:
-		int screen_height{ 100 };
-		int screen_width{ 100 };
+		int screen_height{ 400 };
+		int screen_width{ 400 };
+
+		bool pause{ false };
 
 		enum class GameState {Home, Win, Loss, Play};
 
@@ -21,13 +23,13 @@ namespace Platformer {
 	
 		screen() = default;
 
-		screen(player& player):player(player) {}
+		void drawPlayer(player& player);
+
+		void drawActor(Actor& actor);
+
+		GameState getState() const;
 	private:
-
-		player& player;
 		
-		void drawPlayer();
-
 		static constexpr int totalGameSates{ 4 };
 	};
 }
