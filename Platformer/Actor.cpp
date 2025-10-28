@@ -2,7 +2,8 @@
 #include <iostream>
 
 void Actor::drawActor() {
-	DrawRectangle(position.x, position.y, scale, scale, GREEN);
+	DrawRectangle(static_cast<int>(position.x), static_cast<int>(position.y), scaleX, scaleY, GREEN);
+	collider.createCollider();
 }
 
 std::string Actor::getTag() {
@@ -18,4 +19,14 @@ void Actor::update() {
 	applyGravity();
 	position.x += velocity.x*GetFrameTime();
 	position.y += velocity.y*GetFrameTime();
+
+	collider.updatePosition(position);
+}
+
+void Actor::collisionCheck(Collider& other) {
+	collider.checkCollisions(other);
+}
+
+Collider& Actor::getCollider() {
+	return collider;
 }

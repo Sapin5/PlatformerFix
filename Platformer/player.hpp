@@ -10,8 +10,8 @@ public:
 
 	player() = default;
 
-	player(bool enableGravity, Vector2 position, int scale, std::string tag, std::string name)
-		: Actor(enableGravity, position, scale, tag) {
+	player(bool enableGravity, Vector2 position, int scaleX, int scaleY, std::string tag, std::string name)
+		: Actor(enableGravity, position, scaleX, scaleY, tag, true, true) {
 		this->name = name;
 	}
 

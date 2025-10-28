@@ -126,6 +126,7 @@
     <ClCompile Include="Actor.cpp" />
     <ClCompile Include="BaseClass.cpp" />
     <ClCompile Include="Button.cpp" />
+    <ClCompile Include="Collider.cpp" />
     <ClCompile Include="Controller.cpp" />
     <ClCompile Include="game_m.cpp" />
     <ClCompile Include="Platformer.cpp" />
@@ -139,6 +140,7 @@
     <ClInclude Include="Actor.hpp" />
     <ClInclude Include="BaseClass.hpp" />
     <ClInclude Include="Button.hpp" />
+    <ClInclude Include="Collider.hpp" />
     <ClInclude Include="Controller.hpp" />
     <ClInclude Include="game_m.hpp" />
     <ClInclude Include="player.hpp" />

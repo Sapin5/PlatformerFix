@@ -4,7 +4,9 @@
 
 namespace Platformer {
 	char key{ };
-	player playerOne(true, Vector2{ 100, 100 }, 40, "player", "idk");
+	player playerOne(true, Vector2{ 100, 100 }, 40, 40, "player", "idk");
+
+	Actor floor(false, Vector2{ 100, 200 }, 40, 20, "floor", true, true);
 	Platformer::screen gameScreen;
 	
 
@@ -16,6 +18,7 @@ namespace Platformer {
 
 		if (gameScreen.getState() == Platformer::screen::GameState::Play) {
 			gameScreen.drawPlayer(playerOne);
+			gameScreen.drawActor(floor);
 		}
 		
 	}
@@ -28,6 +31,7 @@ namespace Platformer {
 	void GameManager::updateGame() {
 		if (gameScreen.getState() == Platformer::screen::GameState::Play) {
 			playerOne.update();
+			playerOne.collisionCheck(floor.getCollider());
 		}
 	}
 }
