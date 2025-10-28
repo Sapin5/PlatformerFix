@@ -2,13 +2,15 @@
 #define PLAYER_H
 
 #include "raylib.h"
-class player {
+#include "Actor.hpp"
+
+class player : public Actor {
 public:
 	void drawPlayer();
 	void movePlayer(char key);
 
 private:
-	Vector2 playerPos{ 100, 100 };
+	Vector2 playerPos{ 100.0, 100.0 };
 	Vector2 playerVelocity{ 0, 0 };
 };
 

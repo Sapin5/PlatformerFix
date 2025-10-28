@@ -40,5 +40,6 @@ namespace Platformer {
 
 	void screen::drawPlayer() {
 		player.drawPlayer();
+		player.drawActor();
 	}
 }
