@@ -7,27 +7,67 @@ void Collider::createCollider() {
     }
 }
 
-bool Collider::checkCollisions(Collider& other) {
-    
-    if (!enabled || !other.enabled) return false;
-
-    bool collisionX = position.x < other.position.x + other.scale.x &&
-        position.x + scale.x > other.position.x;
-
-    bool collisionY = position.y < other.position.y + other.scale.y &&
-        position.y + scale.y > other.position.y;
-
-    std::cout << (collisionX && collisionY);
-
-    return collisionX && collisionY;
-}
-
 void Collider::enableCollider(bool enabled) {
 	this->enabled = enabled;
 }
 
-void Collider::updatePosition(Vector2 newPosition) {
+void Collider::updatePosition(Vector2& newPosition) {
 	this->position = newPosition;
-    this->position.x -= 15;
-    this->position.y -= 15;
+}
+
+Collider::CollisionFlags Collider::betterCollisionCheck(Collider& other) {
+    CollisionFlags flags;
+
+    Vector2 thisHalf{ scale.x / 2, scale.y / 2 };
+    Vector2 otherHalf{ other.scale.x / 2, other.scale.y / 2 };
+
+    Vector2 thisCenter{ position.x + thisHalf.x, position.y + thisHalf.x };
+    Vector2 otherCenter{ other.position.x + otherHalf.x, other.position.y + otherHalf.y };
+
+    Vector2 delta{ otherCenter.x - thisCenter.x, otherCenter.y - thisCenter.y };
+
+    Vector2 intersections{ thisHalf.x + otherHalf.x - fabs(delta.x),
+                           thisHalf.y + otherHalf.y - fabs(delta.y) };
+
+    std::cout << delta.y << " " << intersections.y << std::endl;
+
+    if (intersections.x > 0 && intersections.y > 0) {
+        if (delta.y > 0) {
+
+            flags.bottom = true;
+        }
+        else {
+            flags.top = true;
+        }
+        if (delta.x > 0) {
+            flags.right = true;
+        }
+        else {
+            flags.left = true;
+        }
+    }
+
+    if (intersections.x < intersections.y)
+    {
+        this->position.x += copysignf(intersections.x, delta.x);
+        actor.velocity.x = 0;
+    }
+    else
+    {
+        // cancel jump holding if vertical collision
+       // this->cancelJump = (delta.y < 0);
+
+        actor.position.y += copysignf(intersections.y, delta.y);
+        actor.velocity.y = 0;
+    }
+
+    return flags;
+}
+
+Vector2 Collider::getPosition() const {
+    return position;
+}
+
+Vector2 Collider::getScale() const {
+    return scale;
 }

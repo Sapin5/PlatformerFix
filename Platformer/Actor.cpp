@@ -3,7 +3,7 @@
 
 void Actor::drawActor() {
 	DrawRectangle(static_cast<int>(position.x), static_cast<int>(position.y), scaleX, scaleY, GREEN);
-	collider.createCollider();
+	this->collider.createCollider();
 }
 
 std::string Actor::getTag() {
@@ -11,22 +11,37 @@ std::string Actor::getTag() {
 }
 
 void Actor::applyForce(Vector2 force) {
-	velocity.x += force.x;
-	velocity.y += force.y;
+	this->velocity.x += force.x;
+	this->velocity.y += force.y;
 }
 
 void Actor::update() {
 	applyGravity();
-	position.x += velocity.x*GetFrameTime();
-	position.y += velocity.y*GetFrameTime();
+	this->position.x += velocity.x*GetFrameTime();
+	this->position.y += velocity.y*GetFrameTime();
 
 	collider.updatePosition(position);
 }
 
 void Actor::collisionCheck(Collider& other) {
-	collider.checkCollisions(other);
+	auto flags{ collider.betterCollisionCheck(other) };
+
+	if (flags.bottom) {
+		this->velocity.y = 0;
+		this->position.y = other.getPosition().y - scaleY;
+		std::cout << "collision on bottom" << std::endl;
+	}else if (flags.left) {
+		position.x = other.getPosition().x + scaleX;
+		std::cout << "collision on right" << std::endl;
+	}else if (flags.right) {
+		std::cout << "collision on right" << std::endl;
+	}
 }
 
 Collider& Actor::getCollider() {
-	return collider;
+	return this->collider;
+}
+
+Vector2 Actor::getPosition() {
+	return this->position;
 }

@@ -11,7 +11,6 @@ namespace Platformer {
 	public:
 		GameManager() = default;
 		void drawScreen();
-
 		void movePlayer();
 		void updateGame();
 	};

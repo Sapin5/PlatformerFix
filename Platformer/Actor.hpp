@@ -5,24 +5,24 @@
 #include "Collider.hpp"
 #include <string>
 
-
 class Actor : public Base{
 protected:
-	Vector2 position{ 0.0f, 0.0f };
-	int scaleX{ 5 };
-	int scaleY{ 5 };
+	int scaleX;
+	int scaleY;
 	std::string tag{ "  " };
 	Collider collider;
 
 public:
+	Vector2 position{};
+	
 	Actor() = default;
 
-	Actor(bool enableGravity ,Vector2 position, int scaleX, int scaleY, std::string tag, bool collisionEnabaled, bool debug) : Base( enableGravity) {
+	Actor(bool enableGravity, Vector2 position, int scaleX, int scaleY, std::string tag, bool collisionEnabaled, bool debug) : Base( enableGravity ) {
 		this->position = position;
 		this->scaleX = scaleX;
 		this->scaleY = scaleY;
 		this->tag = tag;
-		this->collider = Collider(position, {(float)scaleX, (float)scaleY}, collisionEnabaled, debug);
+		this->collider = Collider(position, {(float)scaleX, (float)scaleY}, collisionEnabaled, debug, this actor);
 	}
 	
 	void drawActor();
@@ -34,6 +34,8 @@ public:
 	void update();
 	void collisionCheck(Collider& other);
 	Collider& getCollider();
+
+	Vector2 getPosition();
 };
 
 #endif // !ACTOR_H
