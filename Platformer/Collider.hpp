@@ -3,7 +3,6 @@
 #include "raylib.h"
 #include <string>
 #include <vector>
-#include "Actor.hpp"
 
 class Collider {
 private:
@@ -15,20 +14,19 @@ private:
 
 	bool collided{ false };
 
-	Actor actor;
 
 public:
 
 	Collider() = default;
 
 	//, std::vector<std::string> canCollide
-	Collider(Vector2 position, Vector2 scale, bool enabled, bool debug, Actor actor) {
+	Collider(Vector2 position, Vector2 scale, bool enabled, bool debug) {
 		this->position = position;
 		this->scale = scale;
 		this->enabled = enabled;
 		//this->canCollide = canCollide;
 		this->debug = debug;
-		this->actor = actor;
+		
 	}
 
 	struct CollisionFlags {
@@ -44,8 +42,9 @@ public:
 
 	void updatePosition(Vector2& newPosition);
 
+	bool checkCollisions(Collider& other);
 
-	Collider::CollisionFlags betterCollisionCheck(Collider& other);
+	std::vector<float> adjustPostion(Collider& other);
 
 	Vector2 getPosition() const;
 	Vector2 getScale() const;

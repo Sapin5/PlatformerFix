@@ -22,7 +22,7 @@ public:
 		this->scaleX = scaleX;
 		this->scaleY = scaleY;
 		this->tag = tag;
-		this->collider = Collider(position, {(float)scaleX, (float)scaleY}, collisionEnabaled, debug, this actor);
+		this->collider = Collider(position, {(float)scaleX, (float)scaleY}, collisionEnabaled, debug);
 	}
 	
 	void drawActor();

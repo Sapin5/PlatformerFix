@@ -24,17 +24,21 @@ void Actor::update() {
 }
 
 void Actor::collisionCheck(Collider& other) {
-	auto flags{ collider.betterCollisionCheck(other) };
+	std::vector<float> adjustments{};
+	bool collided{ collider.checkCollisions(other)};
 
-	if (flags.bottom) {
-		this->velocity.y = 0;
-		this->position.y = other.getPosition().y - scaleY;
-		std::cout << "collision on bottom" << std::endl;
-	}else if (flags.left) {
-		position.x = other.getPosition().x + scaleX;
-		std::cout << "collision on right" << std::endl;
-	}else if (flags.right) {
-		std::cout << "collision on right" << std::endl;
+	if (collided) {
+		adjustments = { collider.adjustPostion(other) };
+		if (adjustments[0] < adjustments[1])
+		{
+			position.x -= copysignf(adjustments[0], adjustments[2]);
+			velocity.x = 0;
+		}
+		else
+		{
+			position.y -= copysignf(adjustments[1], adjustments[3]);
+			velocity.y = 0;
+		}
 	}
 }
 
