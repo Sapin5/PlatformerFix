@@ -129,6 +129,7 @@
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="Controller.cpp" />
     <ClCompile Include="game_m.cpp" />
+    <ClCompile Include="MapParser.cpp" />
     <ClCompile Include="Platformer.cpp" />
     <ClCompile Include="player.cpp" />
     <ClCompile Include="Screens.cpp" />
@@ -140,20 +141,24 @@
     <ClInclude Include="Collider.hpp" />
     <ClInclude Include="Controller.hpp" />
     <ClInclude Include="game_m.hpp" />
+    <ClInclude Include="MapParser.hpp" />
     <ClInclude Include="player.hpp" />
     <ClInclude Include="Screen.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\Maps\Demomap.tmj" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
     <Import Project="packages\raylib.5.5.0\build\native\raylib.targets" Condition="Exists('packages\raylib.5.5.0\build\native\raylib.targets')" />
+    <Import Project="packages\nlohmann.json.3.12.0\build\native\nlohmann.json.targets" Condition="Exists('packages\nlohmann.json.3.12.0\build\native\nlohmann.json.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('packages\raylib.5.5.0\build\native\raylib.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\raylib.5.5.0\build\native\raylib.targets'))" />
+    <Error Condition="!Exists('packages\nlohmann.json.3.12.0\build\native\nlohmann.json.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\nlohmann.json.3.12.0\build\native\nlohmann.json.targets'))" />
   </Target>
 </Project>

@@ -42,6 +42,9 @@
     <ClCompile Include="Collider.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="MapParser.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Controller.hpp">
@@ -68,8 +71,14 @@
     <ClInclude Include="Collider.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="MapParser.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="Assets\Maps\Demomap.tmj">
+      <Filter>Header Files</Filter>
+    </None>
   </ItemGroup>
 </Project>
