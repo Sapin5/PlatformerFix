@@ -31,7 +31,7 @@ public:
 		}
 	}
 
-	void animate(int state) {
+	void animate(int state, Vector2 position) {
 		Rectangle sourceRec = { currentFrame * playerSpriteSize.x,
 							state * playerSpriteSize.y,
 							playerSpriteSize.x, playerSpriteSize.y };
@@ -48,7 +48,8 @@ public:
 		std::cout << spriteSheetData[state][0] << ", " << spriteSheetData[state][1] << "   ";
 		std::cout << currentFrame * playerSpriteSize.x << ", " 
 				  << state * playerSpriteSize.y << "\n";
-		DrawTextureRec(playerSprites, sourceRec, Vector2{ 600, 200 }, WHITE);
+		DrawTextureRec(playerSprites, sourceRec, position, WHITE);
+		//DrawTextureEx(playerSprites, )
 	}
 
 };

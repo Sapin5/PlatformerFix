@@ -19,7 +19,9 @@ namespace Platformer {
 
 
 	void GameManager::loadAllSprites() {
+		AnimationHandler* ptr = &playerAnimation;
 		playerAnimation.loadSpriteSheet("Assets/Sprites/Characters/MinifolksHumans/Outline/MiniSwordMan.png", 6, playerFrames);
+		playerOne.setAnimation(ptr);
 	}
 
 	//drawing

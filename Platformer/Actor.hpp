@@ -25,8 +25,10 @@ public:
 		this->tag = tag;
 		this->collider = Collider(position, {(float)scaleX, (float)scaleY}, collisionEnabaled, debug);
 	}
-	
+
 	void drawActor();
+	
+	void setAnimation(AnimationHandler* sprites);
 
 	std::string getTag();
 
@@ -37,8 +39,6 @@ public:
 	Collider& getCollider();
 
 	Vector2 getPosition();
-
-	void drawObject(Texture2D objectToDraw, Vector2 location, Vector2 newSize);
 };
 
 #endif // !ACTOR_H

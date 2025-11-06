@@ -2,13 +2,18 @@
 #include <iostream>
 
 void Actor::drawActor() {
+	
+	this->collider.createCollider();
 	if (sprites == NULL) {
 		DrawRectangle(static_cast<int>(position.x), static_cast<int>(position.y), scaleX, scaleY, GREEN);
 	}
 	else {
-
+		sprites->animate(0, position);
 	}
-	this->collider.createCollider();
+}
+
+void Actor::setAnimation(AnimationHandler* sprites) {
+	this->sprites = sprites;
 }
 
 std::string Actor::getTag() {
