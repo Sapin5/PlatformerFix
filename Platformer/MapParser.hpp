@@ -19,10 +19,7 @@ void LoadMap() {
 void drawMap(){
 	
 	for (int x = 0; x < mapData.size(); x++) {
-		//std::cout << x;
 		DrawText(TextFormat("%d", mapData[x]), (x % size[1]) * 18, (x/size[1]) * 18, 10, RED);
-		//std::cout << (x % size[1]) *18 << " " << (x / size[1])*18 <<std::endl;
-
 	}
 }
 

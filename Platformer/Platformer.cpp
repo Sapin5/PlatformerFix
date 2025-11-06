@@ -9,16 +9,18 @@ int main()
 	 InitWindow(1600, 800, "Platformer");
 
      Platformer::GameManager Game;
+
+     Game.loadAllSprites();
      LoadMap();
-     //drawMap();
+
      while (!WindowShouldClose()) {
          BeginDrawing();
          
          Game.updateGame();
          Game.drawScreen();
-         
          Game.movePlayer();
          drawMap();
+         
          EndDrawing();
      }
      CloseWindow();

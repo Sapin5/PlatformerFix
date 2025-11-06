@@ -10,6 +10,7 @@ namespace Platformer {
 	class GameManager {
 	public:
 		GameManager() = default;
+		void loadAllSprites();
 		void drawScreen();
 		void movePlayer();
 		void updateGame();

@@ -2,7 +2,12 @@
 #include <iostream>
 
 void Actor::drawActor() {
-	DrawRectangle(static_cast<int>(position.x), static_cast<int>(position.y), scaleX, scaleY, GREEN);
+	if (sprites == NULL) {
+		DrawRectangle(static_cast<int>(position.x), static_cast<int>(position.y), scaleX, scaleY, GREEN);
+	}
+	else {
+
+	}
 	this->collider.createCollider();
 }
 

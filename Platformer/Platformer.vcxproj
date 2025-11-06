@@ -124,6 +124,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Actor.cpp" />
+    <ClCompile Include="AnimationHandler.cpp" />
     <ClCompile Include="BaseClass.cpp" />
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="Collider.cpp" />
@@ -136,6 +137,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor.hpp" />
+    <ClInclude Include="AnimationHandler.hpp" />
     <ClInclude Include="BaseClass.hpp" />
     <ClInclude Include="Button.hpp" />
     <ClInclude Include="Collider.hpp" />

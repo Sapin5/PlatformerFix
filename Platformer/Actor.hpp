@@ -4,6 +4,7 @@
 #include "BaseClass.hpp"
 #include "Collider.hpp"
 #include <string>
+#include "AnimationHandler.hpp"
 
 class Actor : public Base{
 protected:
@@ -11,10 +12,10 @@ protected:
 	int scaleY;
 	std::string tag{ "  " };
 	Collider collider;
+	AnimationHandler* sprites = nullptr;
 
 public:
 	Vector2 position{};
-	
 	Actor() = default;
 
 	Actor(bool enableGravity, Vector2 position, int scaleX, int scaleY, std::string tag, bool collisionEnabaled, bool debug) : Base( enableGravity ) {
@@ -36,6 +37,8 @@ public:
 	Collider& getCollider();
 
 	Vector2 getPosition();
+
+	void drawObject(Texture2D objectToDraw, Vector2 location, Vector2 newSize);
 };
 
 #endif // !ACTOR_H
