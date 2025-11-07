@@ -8,7 +8,7 @@ void Actor::drawActor() {
 		DrawRectangle(static_cast<int>(position.x), static_cast<int>(position.y), scaleX, scaleY, GREEN);
 	}
 	else {
-		sprites->animate(0, position);
+		sprites->animate(1, position);
 	}
 }
 
