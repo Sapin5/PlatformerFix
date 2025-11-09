@@ -11,7 +11,7 @@ public:
 	std::vector<std::vector<int>> spriteSheetData;
 	int currentFrame;
 	float frameTime;
-	float frameSpeed{ 0.2f };
+	float frameSpeed{ 0.1f };
 	Vector2 playerSpriteSize;
 
 	void loadSpriteSheet(std::string path, int x, std::vector<int> y) {
@@ -31,10 +31,22 @@ public:
 		}
 	}
 
-	void animate(int state, Vector2 position) {
+	void animate(int state, Vector2 position, float scale = 1.0f, 
+				 Vector2 adjustOrigin = { 0, 0 }, int direction = 1) {
+
 		Rectangle sourceRec = { currentFrame * playerSpriteSize.x,
-							state * playerSpriteSize.y,
-							playerSpriteSize.x, playerSpriteSize.y };
+								state * playerSpriteSize.y,
+								playerSpriteSize.x*direction, 
+								playerSpriteSize.y };
+
+
+		Rectangle destRec = { position.x, position.y,
+							  playerSpriteSize.x * scale, 
+							  playerSpriteSize.y * scale };
+
+
+		Vector2 origin = { adjustOrigin.x, adjustOrigin.y };
+
 
 		frameTime += GetFrameTime();
 		if (frameTime >= frameSpeed) {
@@ -48,10 +60,14 @@ public:
 		std::cout << spriteSheetData[state][0] << ", " << spriteSheetData[state][1] << "   ";
 		std::cout << currentFrame * playerSpriteSize.x << ", " 
 				  << state * playerSpriteSize.y << "\n";
-		DrawTextureRec(playerSprites, sourceRec, position, WHITE);
-		//DrawTextureEx(playerSprites, )
+
+		DrawTexturePro(playerSprites, sourceRec, destRec, origin, 0.0f, WHITE);
 	}
 
+	void resetCurrentFrame() {
+		currentFrame = 0;
+		frameTime = 0.0f;
+	}
 };
 
 #endif // !ANIMHANDLER_H

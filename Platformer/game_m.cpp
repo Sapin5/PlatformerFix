@@ -17,14 +17,18 @@ namespace Platformer {
 	
 	Platformer::screen gameScreen;
 
-
+	/// <summary>
+	/// Load all sprite sheets that the game will make use of
+	/// </summary>
 	void GameManager::loadAllSprites() {
 		AnimationHandler* ptr = &playerAnimation;
 		playerAnimation.loadSpriteSheet("Assets/Sprites/Characters/MinifolksHumans/Outline/MiniSwordMan.png", 6, playerFrames);
 		playerOne.setAnimation(ptr);
 	}
 
-	//drawing
+	/// <summary>
+	/// Draw player sprites during play state
+	/// </summary>
 	void GameManager::drawScreen(){
 		key = Platformer::getKeyPressed();
 		gameScreen.update(key);
@@ -37,12 +41,18 @@ namespace Platformer {
 			gameScreen.drawActor(floor2);
 		}
 	}
-	//updating
-
+	
+	/// <summary>
+	/// Pass keyboard input into player to move around
+	/// </summary>
 	void GameManager::movePlayer() {
 		playerOne.movePlayer(key);
 	}
 
+	/// <summary>
+	/// Update Players position
+	/// Perform collision checks
+	/// </summary>
 	void GameManager::updateGame() {
 		if (gameScreen.getState() == Platformer::screen::GameState::Play) {
 			playerOne.update();

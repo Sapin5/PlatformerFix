@@ -21,6 +21,7 @@ namespace Platformer {
 		}
 	}
 
+
 	void screen::setScreen() {
 		switch (currentState) {
 		case  GameState::Home:

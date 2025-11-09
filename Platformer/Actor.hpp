@@ -26,7 +26,7 @@ public:
 		this->collider = Collider(position, {(float)scaleX, (float)scaleY}, collisionEnabaled, debug);
 	}
 
-	void drawActor();
+	virtual void drawActor();
 	
 	void setAnimation(AnimationHandler* sprites);
 

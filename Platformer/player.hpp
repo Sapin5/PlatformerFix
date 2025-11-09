@@ -5,7 +5,8 @@
 
 class player : public Actor {
 public:
-
+	int state{ 0 };
+	int direction{ 1 };
 	std::string name{""};
 
 	player() = default;
@@ -16,6 +17,7 @@ public:
 	}
 
 	void movePlayer(char key);
+	void drawActor() override;
 };
 
 #endif // !PLAYER_H
