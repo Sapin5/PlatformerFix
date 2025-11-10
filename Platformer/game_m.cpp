@@ -1,5 +1,5 @@
 #include "game_m.hpp"
-
+#include "raymath.h"
 #include <vector>
 #include <iostream>
 #include <array>
@@ -30,12 +30,13 @@ namespace Platformer {
 	/// <summary>
 	/// Draw player sprites during play state
 	/// </summary>
-	void GameManager::drawScreen(){
+	void GameManager::drawScreen(Camera2D& cam){
 		key = Platformer::getKeyPressed();
 		gameScreen.update(key);
 		gameScreen.setScreen();
 
-		if (gameScreen.getState() == Platformer::screen::GameState::Play) {
+		if (gameScreen.getState() == Platformer::Screen::GameState::Play) {
+			BeginMode2D(cam);
 			gameScreen.drawPlayer(playerOne);
 
 			gameScreen.drawActor(floor);
@@ -43,6 +44,7 @@ namespace Platformer {
 
 			gameScreen.newMap.drawMapTiles();
 			gameScreen.newMap.drawMap();
+			EndMode2D();
 		}
 	}
 	
@@ -57,10 +59,13 @@ namespace Platformer {
 	/// Update Players position
 	/// Perform collision checks
 	/// </summary>
-	void GameManager::updateGame() {
-		if (gameScreen.getState() == Platformer::screen::GameState::Play) {
+	void GameManager::updateGame(Camera2D& cam) {
+
+		if (gameScreen.getState() == Platformer::Screen::GameState::Play) {
 			playerOne.update();
 
+			cam.target = { (playerOne.getPosition().x - gameScreen.screen_width),
+						   static_cast<float>(playerOne.getPosition().y - (gameScreen.screen_height / 1.5)) };
 
 			playerOne.collisionCheck(floor.getCollider());
 			playerOne.collisionCheck(floor2.getCollider());

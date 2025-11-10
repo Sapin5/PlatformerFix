@@ -9,8 +9,6 @@ using json = nlohmann::json;
 
 class MapParser {
 private:
-
-
 	std::vector<int> mapData;
 	std::vector<int> mapSize;
 	std::vector<int> tileShape;
@@ -18,7 +16,7 @@ private:
 	Texture2D tileSet;
 	int tilesetColumns;
 public:
-
+	// Modify Loadmap to read the tsj file that contains collider bool, assign colliders accordingly?
 
 	/// <summary>
 	/// Load tilemap data from Json
@@ -60,12 +58,13 @@ public:
 			Rectangle sourceRect = {
 				static_cast<float>((tileIndex % tilesetColumns) * tileShape[0]),
 				static_cast<float>((tileIndex / tilesetColumns) * tileShape[1]),
-				tileShape[0], tileShape[1]
+				static_cast<float>(tileShape[0]), static_cast<float>(tileShape[1])
 			};
 
 			// Position which the tile is to be placed
 			Vector2 destPos = {
-				(i % mapSize[0]) * tileShape[0], (i / mapSize[0]) * tileShape[1]
+				static_cast<float>((i % mapSize[0]) * tileShape[0]), 
+					static_cast<float>((i / mapSize[0]) * tileShape[1])
 			};
 
 			// Draw tile on screen

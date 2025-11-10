@@ -14,14 +14,14 @@ namespace Platformer {
 		GameManager() = default;
 
 		void loadAllSprites();
-		void drawScreen();
+		void drawScreen(Camera2D& cam);
 		void movePlayer();
-		void updateGame();
+		void updateGame(Camera2D& cam);
 		void loadGameMap();
 
 		char key{ };
 
-		screen gameScreen;
+		Screen gameScreen;
 		AnimationHandler playerAnimation;
 	};
 }

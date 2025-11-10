@@ -5,7 +5,7 @@
 #include "MapParser.hpp"
 
 namespace Platformer {
-	class screen {
+	class Screen {
 	public:
 		int screen_height{ 400 };
 		int screen_width{ 400 };
@@ -25,7 +25,7 @@ namespace Platformer {
 		void drawActor(Actor& actor);
 		
 		
-		screen() = default;
+		Screen() = default;
 	private:
 		
 		static constexpr int totalGameSates{ 4 };

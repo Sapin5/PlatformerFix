@@ -6,22 +6,22 @@ namespace Platformer {
 	Platformer::Button playButton(100, 100, 150, 150, BLUE, RED);
 	Platformer::Button homeButton(100, 100, 150, 150, WHITE, BLACK);
 
-	void screen::setScreenSize(int screenX, int screenY) {
+	void Screen::setScreenSize(int screenX, int screenY) {
 		screen_height = screenY;
 		screen_width = screenX;
 	}
 
-	screen::GameState screen::getState() const {
+	Screen::GameState Screen::getState() const {
 		return currentState;
 	}
 
-	void screen::update(char ch) {
+	void Screen::update(char ch) {
 		if (ch == 'p') {
 			pause = true;
 		}
 	}
 
-	void screen::setScreen() {
+	void Screen::setScreen() {
 		switch (currentState) {
 		case  GameState::Home:
 			if (playButton.drawButton()) currentState = GameState::Play;
@@ -41,19 +41,19 @@ namespace Platformer {
 		}
 	}
 
-	void screen::drawPlayer(player& player) {
+	void Screen::drawPlayer(player& player) {
 		player.drawActor();
 	}
 
-	void screen::drawActor(Actor& actor) {
+	void Screen::drawActor(Actor& actor) {
 		actor.drawActor();
 	}
 
-	void screen::loadGameMap() {
+	void Screen::loadGameMap() {
 		newMap.LoadMap();
 	}
 
-	void screen::loadTileMap() {
+	void Screen::loadTileMap() {
 		newMap.loadTileMap();
 	}
 }

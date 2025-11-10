@@ -5,7 +5,9 @@ int main()
 {
      Platformer::GameManager Game;
      Game.loadGameMap();
-
+     Camera2D cam{ 0 };
+     cam.offset = { GetScreenWidth() / 2.0f, GetScreenHeight() / 2.0f };
+     cam.zoom = 1.0f;
      std::vector<int> size{ Game.gameScreen.newMap.getWindowSize() };
      std::vector<int> screenSize { Game.gameScreen.newMap.getTileShape() };
 
@@ -17,10 +19,11 @@ int main()
 
      while (!WindowShouldClose()) {
          BeginDrawing();
-         
-         Game.updateGame();
-         Game.drawScreen();
+         ClearBackground(RAYWHITE);
+         Game.updateGame(cam);
+         Game.drawScreen(cam);
          Game.movePlayer();
+
          EndDrawing();
      }
      CloseWindow();
