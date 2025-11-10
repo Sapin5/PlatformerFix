@@ -31,8 +31,8 @@ public:
 		}
 	}
 
-	void animate(int state, Vector2 position, float scale = 1.0f, 
-				 Vector2 adjustOrigin = { 0, 0 }, int direction = 1) {
+	void animate(int state, Vector2 position, float scale , 
+				 Vector2 adjustOrigin, int direction) {
 
 		Rectangle sourceRec = { currentFrame * playerSpriteSize.x,
 								state * playerSpriteSize.y,
@@ -57,10 +57,6 @@ public:
 			}
 			frameTime = 0.0f;
 		}
-		std::cout << spriteSheetData[state][0] << ", " << spriteSheetData[state][1] << "   ";
-		std::cout << currentFrame * playerSpriteSize.x << ", " 
-				  << state * playerSpriteSize.y << "\n";
-
 		DrawTexturePro(playerSprites, sourceRec, destRec, origin, 0.0f, WHITE);
 	}
 

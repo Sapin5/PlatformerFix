@@ -5,8 +5,10 @@
 
 class Base {
 private:
-	float gravity{ 9.8f };
+	// Real world grav is about 9.8f
+	float gravity{ 200.0f };
 	bool enableGravity{ true };
+	float terminalVelocity{ 150.0f };
 public:
 	Vector2 velocity{ 0,0 };
 	
@@ -15,6 +17,8 @@ public:
 	void toggleGravity(bool enable);
 
 	void applyGravity();
+
+	void setTerminalVelocity(float terminalVelocity);
 
 	Base() = default;
 

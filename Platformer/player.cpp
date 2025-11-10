@@ -26,12 +26,16 @@ void player::movePlayer(char key) {
         newState = 1;
     }
 
+    if (IsKeyPressed(KEY_SPACE)) {
+        applyForce(Vector2{ 0, -200 });
+        std::cout << "Jumped";
+    }
+
     if (newState != state) {
         state = newState;
         if (sprites) sprites->resetCurrentFrame();
     }
 }
-
 
 void player::drawActor(){
     this->collider.createCollider();

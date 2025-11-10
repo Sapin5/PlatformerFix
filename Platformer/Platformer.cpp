@@ -5,13 +5,16 @@
 
 int main()
 {
+     MapParser newMap;
+     newMap.LoadMap();
+     std::vector<int> size = newMap.getWindowSize();
      SetTargetFPS(100);
-	 InitWindow(1600, 800, "Platformer");
+	 InitWindow(size[0]*18, size[1]*18, "Platformer");
 
      Platformer::GameManager Game;
 
      Game.loadAllSprites();
-     LoadMap();
+     
 
      while (!WindowShouldClose()) {
          BeginDrawing();
@@ -19,7 +22,7 @@ int main()
          Game.updateGame();
          Game.drawScreen();
          Game.movePlayer();
-         drawMap();
+         newMap.drawMap();
          
          EndDrawing();
      }
