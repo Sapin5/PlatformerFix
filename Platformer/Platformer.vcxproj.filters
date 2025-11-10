@@ -86,5 +86,8 @@
     <None Include="Assets\Maps\Demomap.tmj">
       <Filter>Header Files</Filter>
     </None>
+    <None Include="Assets\Maps\Demomap2.tmj">
+      <Filter>Header Files</Filter>
+    </None>
   </ItemGroup>
 </Project>
