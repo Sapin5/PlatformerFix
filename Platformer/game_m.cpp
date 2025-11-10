@@ -1,21 +1,16 @@
 #include "game_m.hpp"
-#include "player.hpp"
+
+#include <vector>
 #include <iostream>
 #include <array>
-#include "AnimationHandler.hpp"
-#include <vector>
 
 namespace Platformer {
-	char key{ };
-	
+
 	player playerOne(true, Vector2{ 100, 100 }, 40, 40, "player", "idk");
-	AnimationHandler playerAnimation;
 	std::vector<int> playerFrames{ 4, 6, 3, 6, 3, 4 };
 
 	Actor floor(false, Vector2{ 100, 200 }, 40, 60, "floor", true, true);
 	Actor floor2(false, Vector2{ 130, 220 }, 40, 60, "floor", true, true);
-	
-	Platformer::screen gameScreen;
 
 	/// <summary>
 	/// Load all sprite sheets that the game will make use of
@@ -24,6 +19,12 @@ namespace Platformer {
 		AnimationHandler* ptr = &playerAnimation;
 		playerAnimation.loadSpriteSheet("Assets/Sprites/Characters/MinifolksHumans/Outline/MiniSwordMan.png", 6, playerFrames);
 		playerOne.setAnimation(ptr);
+
+		gameScreen.loadTileMap();
+	}
+
+	void GameManager::loadGameMap() {
+		gameScreen.loadGameMap();
 	}
 
 	/// <summary>
@@ -39,6 +40,9 @@ namespace Platformer {
 
 			gameScreen.drawActor(floor);
 			gameScreen.drawActor(floor2);
+
+			gameScreen.newMap.drawMapTiles();
+			gameScreen.newMap.drawMap();
 		}
 	}
 	
@@ -56,6 +60,8 @@ namespace Platformer {
 	void GameManager::updateGame() {
 		if (gameScreen.getState() == Platformer::screen::GameState::Play) {
 			playerOne.update();
+
+
 			playerOne.collisionCheck(floor.getCollider());
 			playerOne.collisionCheck(floor2.getCollider());
 		}

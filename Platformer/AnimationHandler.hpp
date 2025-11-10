@@ -16,7 +16,7 @@ public:
 
 	void loadSpriteSheet(std::string path, int x, std::vector<int> y) {
 
-		playerSprites = { LoadTexture(path.c_str()) };
+		playerSprites = LoadTexture(path.c_str());
 		playerSpriteSize = { playerSprites.width / static_cast<float>(x), 
 							 playerSprites.height / static_cast<float>(y.size()) };
 

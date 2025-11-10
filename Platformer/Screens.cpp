@@ -21,7 +21,6 @@ namespace Platformer {
 		}
 	}
 
-
 	void screen::setScreen() {
 		switch (currentState) {
 		case  GameState::Home:
@@ -48,5 +47,13 @@ namespace Platformer {
 
 	void screen::drawActor(Actor& actor) {
 		actor.drawActor();
+	}
+
+	void screen::loadGameMap() {
+		newMap.LoadMap();
+	}
+
+	void screen::loadTileMap() {
+		newMap.loadTileMap();
 	}
 }

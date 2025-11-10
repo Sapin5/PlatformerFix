@@ -3,6 +3,8 @@
 
 #include "raylib.h"
 #include "screen.hpp"
+#include "player.hpp"
+#include "AnimationHandler.hpp"
 #include "controller.hpp"
 
 namespace Platformer {
@@ -10,13 +12,17 @@ namespace Platformer {
 	class GameManager {
 	public:
 		GameManager() = default;
+
 		void loadAllSprites();
 		void drawScreen();
 		void movePlayer();
 		void updateGame();
-	};
-	//drawing
+		void loadGameMap();
 
-	//updating
+		char key{ };
+
+		screen gameScreen;
+		AnimationHandler playerAnimation;
+	};
 }
 #endif // !GAMEMANAGEr

@@ -1,20 +1,19 @@
-#include <iostream>
 #include "raylib.h"
 #include "game_m.hpp"
-#include "MapParser.hpp"
 
 int main()
 {
-     MapParser newMap;
-     newMap.LoadMap();
-     std::vector<int> size = newMap.getWindowSize();
-     SetTargetFPS(100);
-	 InitWindow(size[0]*18, size[1]*18, "Platformer");
-
      Platformer::GameManager Game;
+     Game.loadGameMap();
+
+     std::vector<int> size{ Game.gameScreen.newMap.getWindowSize() };
+     std::vector<int> screenSize { Game.gameScreen.newMap.getTileShape() };
+
+     SetTargetFPS(60);
+
+     InitWindow(size[0] * screenSize[0], size[1] * screenSize[1], "Platformer");
 
      Game.loadAllSprites();
-     
 
      while (!WindowShouldClose()) {
          BeginDrawing();
@@ -22,8 +21,6 @@ int main()
          Game.updateGame();
          Game.drawScreen();
          Game.movePlayer();
-         newMap.drawMap();
-         
          EndDrawing();
      }
      CloseWindow();
