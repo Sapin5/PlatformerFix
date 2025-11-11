@@ -16,7 +16,7 @@ namespace Platformer {
 		GameState currentState{ GameState::Home };
 		GameState getState() const;
 
-		void loadGameMap();
+		void loadGameMap(const std::string& filePath);
 		void loadTileMap();
 		void setScreenSize(int screenX, int screenY);
 		void update(char ch);

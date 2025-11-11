@@ -49,8 +49,9 @@ namespace Platformer {
 		actor.drawActor();
 	}
 
-	void Screen::loadGameMap() {
-		newMap.LoadMap();
+	void Screen::loadGameMap(const std::string& filePath) {
+		newMap.LoadMap(filePath);
+		newMap.LoadCollisionMap("Assets/Maps/tilemap_packed_data.tsj");
 	}
 
 	void Screen::loadTileMap() {

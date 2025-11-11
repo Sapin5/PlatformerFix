@@ -6,6 +6,9 @@
 #include "player.hpp"
 #include "AnimationHandler.hpp"
 #include "controller.hpp"
+#include "raymath.h"
+#include <vector>
+#include <iostream>
 
 namespace Platformer {
 
@@ -17,12 +20,14 @@ namespace Platformer {
 		void drawScreen(Camera2D& cam);
 		void movePlayer();
 		void updateGame(Camera2D& cam);
-		void loadGameMap();
-
+		void loadGameMap(const std::string& filePath);
+		void createMapCollisions();
 		char key{ };
 
 		Screen gameScreen;
 		AnimationHandler playerAnimation;
+
+		std::unordered_map<int, bool> idk;
 	};
 }
 #endif // !GAMEMANAGEr

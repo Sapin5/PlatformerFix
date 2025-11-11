@@ -4,7 +4,7 @@
 int main()
 {
      Platformer::GameManager Game;
-     Game.loadGameMap();
+     Game.loadGameMap("Assets/Maps/Demomap3.tmj");
      Camera2D cam{ 0 };
      cam.offset = { GetScreenWidth() / 2.0f, GetScreenHeight() / 2.0f };
      cam.zoom = 1.0f;
@@ -16,6 +16,7 @@ int main()
      InitWindow(size[0] * screenSize[0], size[1] * screenSize[1], "Platformer");
 
      Game.loadAllSprites();
+     Game.createMapCollisions();
 
      while (!WindowShouldClose()) {
          BeginDrawing();

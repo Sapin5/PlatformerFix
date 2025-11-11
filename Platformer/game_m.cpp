@@ -1,8 +1,4 @@
 #include "game_m.hpp"
-#include "raymath.h"
-#include <vector>
-#include <iostream>
-#include <array>
 
 namespace Platformer {
 
@@ -11,6 +7,15 @@ namespace Platformer {
 
 	Actor floor(false, Vector2{ 100, 200 }, 40, 60, "floor", true, true);
 	Actor floor2(false, Vector2{ 130, 220 }, 40, 60, "floor", true, true);
+
+	void GameManager::createMapCollisions() {
+		// Retrieve the map from your NewMap object
+		idk = gameScreen.newMap.getCollisionTiles();
+
+		for (const auto& pair : idk) {
+			
+		}
+	}
 
 	/// <summary>
 	/// Load all sprite sheets that the game will make use of
@@ -23,8 +28,12 @@ namespace Platformer {
 		gameScreen.loadTileMap();
 	}
 
-	void GameManager::loadGameMap() {
-		gameScreen.loadGameMap();
+	/*
+	* REMEMBER TO MODIFY THIS TO EXTRACT MAP DATA TO CREATE ACTORS LATER
+	* PLEASE, IT TOOK YOU WAY TOO LONG TO THINK OF THIS
+	*/
+	void GameManager::loadGameMap(const std::string& filePath) {
+		gameScreen.loadGameMap(filePath);
 	}
 
 	/// <summary>

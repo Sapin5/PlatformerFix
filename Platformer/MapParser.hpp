@@ -12,23 +12,51 @@ private:
 	std::vector<int> mapData;
 	std::vector<int> mapSize;
 	std::vector<int> tileShape;
+
+	std::vector< std::vector<float> > collisionPositions;
 	
 	Texture2D tileSet;
 	int tilesetColumns;
 public:
+
+	std::unordered_map<int, bool> collisionTiles;
 	// Modify Loadmap to read the tsj file that contains collider bool, assign colliders accordingly?
 
 	/// <summary>
 	/// Load tilemap data from Json
 	/// </summary>
 	/// <param name="filePath"></param>
-	void LoadMap(const std::string& filePath = " ") {
-		std::ifstream f("Assets/Maps/Demomap3.tmj");
+	std::vector<int> LoadMap(const std::string& filePath) {
+		std::ifstream f(filePath);
 		json data = json::parse(f);
 
 		mapData = data.at("layers")[0].at("data").get<std::vector<int>>();
 		mapSize = { data.at("width"), data.at("height") };
 		tileShape = { data.value("tilewidth", 18), data.value("tileheight", 18) };
+
+		return mapData;
+	}
+
+	std::unordered_map<int, bool> LoadCollisionMap(const std::string& filePath) {
+		std::ifstream f(filePath);
+		json data = json::parse(f);
+
+		for (auto& tile : data["tiles"]) {
+			int id = tile["id"];
+			bool collisionValue = false;
+
+			if (tile.contains("properties")) {
+				for (auto& prop : tile["properties"]) {
+					if (prop["name"] == "Collision") {
+						collisionValue = prop["value"].get<bool>();
+					}
+				}
+			}
+
+			collisionTiles[id] = collisionValue;
+		}
+		//  collisionPositions.push_back({ destPos.x, destPos.y });
+		return collisionTiles;
 	}
 
 
@@ -70,6 +98,7 @@ public:
 			// Draw tile on screen
 			DrawTextureRec(tileSet, sourceRect, destPos, WHITE);
 		}
+
 	}
 
 
@@ -95,6 +124,10 @@ public:
 
 	std::vector<int> getTileShape() {
 		return tileShape;
+	}
+
+	std::unordered_map<int, bool> getCollisionTiles() {
+		return collisionTiles;
 	}
 };
 
