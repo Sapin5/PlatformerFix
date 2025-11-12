@@ -23,7 +23,8 @@ namespace Platformer {
 		void setScreen();
 		void drawPlayer(player& player);
 		void drawActor(Actor& actor);
-		
+
+		std::unordered_map<int, bool> tileCollision{ 0 };
 		
 		Screen() = default;
 	private:

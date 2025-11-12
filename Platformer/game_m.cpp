@@ -1,19 +1,17 @@
 #include "game_m.hpp"
-
 namespace Platformer {
 
 	player playerOne(true, Vector2{ 100, 100 }, 40, 40, "player", "idk");
 	std::vector<int> playerFrames{ 4, 6, 3, 6, 3, 4 };
 
-	Actor floor(false, Vector2{ 100, 200 }, 40, 60, "floor", true, true);
-	Actor floor2(false, Vector2{ 130, 220 }, 40, 60, "floor", true, true);
-
 	void GameManager::createMapCollisions() {
-		// Retrieve the map from your NewMap object
-		idk = gameScreen.newMap.getCollisionTiles();
+		gameScreen.newMap.fillStruct();
+		std::vector <TileInfo> temp = gameScreen.newMap.temp();
+		std::vector<int> size{ gameScreen.newMap.getTileShape() };
 
-		for (const auto& pair : idk) {
-			
+		for (const auto& data: temp) {
+			tiles.push_back(Actor(false, Vector2{ data.xPos, data.yPos }, 
+									size[0], size[1], std::to_string(data.id), true, false));
 		}
 	}
 
@@ -24,7 +22,6 @@ namespace Platformer {
 		AnimationHandler* ptr = &playerAnimation;
 		playerAnimation.loadSpriteSheet("Assets/Sprites/Characters/MinifolksHumans/Outline/MiniSwordMan.png", 6, playerFrames);
 		playerOne.setAnimation(ptr);
-
 		gameScreen.loadTileMap();
 	}
 
@@ -48,8 +45,9 @@ namespace Platformer {
 			BeginMode2D(cam);
 			gameScreen.drawPlayer(playerOne);
 
-			gameScreen.drawActor(floor);
-			gameScreen.drawActor(floor2);
+			for (int i = 0; i < tiles.size(); i++) {
+				gameScreen.drawActor(tiles[i]);
+			}
 
 			gameScreen.newMap.drawMapTiles();
 			gameScreen.newMap.drawMap();
@@ -76,8 +74,9 @@ namespace Platformer {
 			cam.target = { (playerOne.getPosition().x - gameScreen.screen_width),
 						   static_cast<float>(playerOne.getPosition().y - (gameScreen.screen_height / 1.5)) };
 
-			playerOne.collisionCheck(floor.getCollider());
-			playerOne.collisionCheck(floor2.getCollider());
+			for (int i = 0; i < tiles.size(); i++) {
+				playerOne.collisionCheck(tiles[i].getCollider());
+			}
 		}
 	}
 }

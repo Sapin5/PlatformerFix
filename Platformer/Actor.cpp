@@ -6,9 +6,13 @@ void Actor::drawActor() {
 	if (sprites == NULL) {
 		DrawRectangle(static_cast<int>(position.x), static_cast<int>(position.y), scaleX, scaleY, GREEN);
 	}
-	else {
+	else if(!blankSprite){
 		DrawRectangle(static_cast<int>(position.x), static_cast<int>(position.y), scaleX, scaleY, BLACK);
 	}
+}
+
+void Actor::spriteEnabled(bool value) {
+	blankSprite = value;
 }
 
 void Actor::setAnimation(AnimationHandler* sprites) {

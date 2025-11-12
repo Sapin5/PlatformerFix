@@ -28,6 +28,8 @@ namespace Platformer {
 		AnimationHandler playerAnimation;
 
 		std::unordered_map<int, bool> idk;
+
+		std::vector<Actor> tiles;
 	};
 }
 #endif // !GAMEMANAGEr

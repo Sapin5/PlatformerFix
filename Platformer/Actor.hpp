@@ -13,12 +13,14 @@ protected:
 	std::string tag{ "  " };
 	Collider collider;
 	AnimationHandler* sprites = nullptr;
+	bool blankSprite{ false };
 
 public:
 	Vector2 position{};
 	Actor() = default;
 
-	Actor(bool enableGravity, Vector2 position, int scaleX, int scaleY, std::string tag, bool collisionEnabaled, bool debug) : Base( enableGravity ) {
+	Actor(bool enableGravity, Vector2 position, int scaleX, int scaleY, 
+			std::string tag, bool collisionEnabaled, bool debug) : Base( enableGravity ) {
 		this->position = position;
 		this->scaleX = scaleX;
 		this->scaleY = scaleY;
@@ -39,6 +41,8 @@ public:
 	Collider& getCollider();
 
 	Vector2 getPosition();
+
+	void spriteEnabled(bool value);
 };
 
 #endif // !ACTOR_H

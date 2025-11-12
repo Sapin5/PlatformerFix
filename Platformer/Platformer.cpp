@@ -5,6 +5,7 @@ int main()
 {
      Platformer::GameManager Game;
      Game.loadGameMap("Assets/Maps/Demomap3.tmj");
+
      Camera2D cam{ 0 };
      cam.offset = { GetScreenWidth() / 2.0f, GetScreenHeight() / 2.0f };
      cam.zoom = 1.0f;
