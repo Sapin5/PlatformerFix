@@ -12,12 +12,31 @@ private:
 public:
 	Vector2 velocity{ 0,0 };
 	
+
+	/// <summary>
+	/// Modify the strength of gravity applied on the actor
+	/// </summary>
+	/// <param name="gravityValue"></param>
 	void setGravity(float gravityValue);
 	
+
+	/// <summary>
+	/// Enable or disable gravity on the actor
+	/// </summary>
+	/// <param name="enable"></param>
 	void toggleGravity(bool enable);
 
+
+	/// <summary>
+	/// Applies gravity on actor
+	/// </summary>
 	void applyGravity();
 
+
+	/// <summary>
+	/// Sets terminal velocity which will limit the speed at which player falls
+	/// </summary>
+	/// <param name="terminalVelocity"></param>
 	void setTerminalVelocity(float terminalVelocity);
 
 	Base() = default;

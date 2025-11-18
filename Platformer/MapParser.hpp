@@ -66,12 +66,32 @@ public:
 	/// </returns>
 	std::vector<int> getWindowSize();
 	
+
+	/// <summary>
+	/// Returns map data (Array of all tiles in game)
+	/// </summary>
+	/// <returns></returns>
 	std::vector<int> getMapData();
 
+
+	/// <summary>
+	/// Returns shape of tiles (Pixel height and width)
+	/// </summary>
+	/// <returns></returns>
 	std::vector<int> getTileShape();
 
+
+	/// <summary>
+	/// returns Umap of tiles that have their collision enabled
+	/// </summary>
+	/// <returns></returns>
 	std::unordered_map<int, bool> getCollisionTiles();
 
+
+	/// <summary>
+	/// Returns the position of all tiles
+	/// </summary>
+	/// <returns></returns>
 	std::vector< std::vector<float> > getTilePosition();
 };
 

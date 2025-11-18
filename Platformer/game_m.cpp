@@ -99,8 +99,8 @@ namespace Platformer {
 			}
 
 			if (shakeDuration > 0.0f) {
-				float offsetX = ((float)rand() / RAND_MAX * 2.0f - 1.0f) * shakeMagnitude;
-				float offsetY = ((float)rand() / RAND_MAX * 2.0f - 1.0f) * shakeMagnitude;
+				float offsetX = (static_cast<float>(rand()) / RAND_MAX * 2.0f - 1.0f) * shakeMagnitude;
+				float offsetY = (static_cast<float>(rand()) / RAND_MAX * 2.0f - 1.0f) * shakeMagnitude;
 				cam.target.x += offsetX;
 				cam.target.y += offsetY;
 

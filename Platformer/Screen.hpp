@@ -16,15 +16,50 @@ namespace Platformer {
 		GameState currentState{ GameState::Home };
 		GameState getState() const;
 
-		void loadGameMap(const std::string& filePath);
-		void loadTileMap();
-		void setScreenSize(int screenX, int screenY);
-		void update(char ch);
-		void setScreen();
-		void drawPlayer(player& player);
-		void drawActor(Actor& actor);
 
-		std::unordered_map<int, bool> tileCollision{ 0 };
+		/// <summary>
+		/// Loads the Game Map from filepath
+		/// </summary>
+		/// <param name="filePath"></param>
+		void loadGameMap(const std::string& filePath);
+
+
+		/// <summary>
+		/// Loads tile map sprite pack
+		/// </summary>
+		void loadTileMap();
+
+
+		/// <summary>
+		/// Returns a desired screen size. Unused
+		/// </summary>
+		/// <param name="screenX"></param>
+		/// <param name="screenY"></param>
+		void setScreenSize(int screenX, int screenY);
+
+		/// <summary>
+		/// Checks for key input during gameplay that is not movement related
+		/// </summary>
+		/// <param name="ch"></param>
+		void update(char ch);
+
+		/// <summary>
+		/// Changes screen based on game state
+		/// </summary>
+		void setScreen();
+
+
+		/// <summary>
+		/// Draws player
+		/// </summary>
+		/// <param name="player"></param>
+		void drawPlayer(player& player);
+
+		/// <summary>
+		/// Draws actor
+		/// </summary>
+		/// <param name="actor"></param>
+		void drawActor(Actor& actor);
 		
 		Screen() = default;
 	private:

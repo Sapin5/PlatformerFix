@@ -38,6 +38,9 @@ public:
 	/// Call when transitioning between states to avoid sprite not appearing properly
 	/// </summary>
 	void resetCurrentFrame();
+
+	void overrideCurrentFrame(int state, Vector2 position, float scale,
+		Vector2 adjustOrigin, int direction, int frame);
 };
 
 #endif // !ANIMHANDLER_H

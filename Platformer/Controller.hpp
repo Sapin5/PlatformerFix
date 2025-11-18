@@ -3,6 +3,10 @@
 #include "raylib.h"
 
 namespace Platformer {
+	/// <summary>
+	/// Returns char pressed
+	/// </summary>
+	/// <returns></returns>
 	char getKeyPressed();
 }
 

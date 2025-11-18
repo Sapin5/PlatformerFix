@@ -64,6 +64,7 @@ void Collider::populateFlags(Vector2 intersections, Vector2 delta) {
             // Other is to the right
             flags.right = true;
             flags.left = false;
+            
         } else {
             // Other is to the left
             flags.left = true;

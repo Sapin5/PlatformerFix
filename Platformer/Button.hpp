@@ -32,8 +32,17 @@ namespace Platformer{
 			 this->buttonValue = buttonValue;
 		}
 		
+		/// <summary>
+		/// Checks if mouse is hovering over button
+		/// </summary>
+		/// <returns></returns>
 		bool hoveredOver();
 
+
+		/// <summary>
+		/// Draws button on screen
+		/// </summary>
+		/// <returns></returns>
 		bool drawButton() ;
 	};
 }

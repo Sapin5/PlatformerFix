@@ -10,13 +10,14 @@ void player::movePlayer(char key) {
     int newState = 0;
 
     if (collider.flags.bottom) {
+        toggleGravity(false);
         jump = true;
     }
     
     velocity.x = 0;
 
-    std::cout << collider.flags.left;
     if (moveRight && !moveLeft) {
+        toggleGravity(true);
         velocity.x = 150;
         direction = 1;
         newState = 1;
@@ -24,25 +25,31 @@ void player::movePlayer(char key) {
     }
 
     if (moveLeft && !moveRight ) {
+        toggleGravity(true);
         velocity.x = -150;
         direction = -1;
         newState = 1;
 
     }
 
-    if (moveDown) {
-        velocity.y = 150;
-        newState = 1;
+    if (moveDown && !collider.flags.bottom) {
+        velocity.y += 20;
+        newState = 2;
     }
 
     if (IsKeyPressed(KEY_SPACE) && jump) {
         applyForce(Vector2{ 0, -200 });
+        toggleGravity(true);
         jump = false;
         collider.flags.bottom = false;
 
         if (onShake) {
-            onShake(0.4f, 12.0f);
+            //onShake(0.4f, 12.0f);
         }
+    }
+
+    if (!jump) {
+        newState = 2;
     }
 
     if (newState != state) {
@@ -52,12 +59,35 @@ void player::movePlayer(char key) {
 }
 
 
-void player::drawActor(){
+void player::drawActor() {
     this->collider.createCollider();
-    if (sprites == NULL) {
-        DrawRectangle(static_cast<int>(position.x), static_cast<int>(position.y), scaleX, scaleY, GREEN);
+
+    bool grounded = collider.flags.bottom;
+
+    if (sprites == nullptr) {
+        DrawRectangle((int)position.x, (int)position.y, scaleX, scaleY, GREEN);
+        return;
     }
+    if (grounded) {
+       
+        if (velocity.x == 0) {
+            sprites->animate(state, position, 1.5f, { 15.5,28 }, direction);
+        }
+        
+        else {
+            sprites->animate(state, position, 1.5f, { 15.5,28 }, direction);
+        }
+    }
+
+    
     else {
-        sprites->animate(state, position, 1.5f, Vector2 { 15.5, 28 }, direction);
+        if (velocity.y < 0) {
+            
+            sprites->overrideCurrentFrame(state, position, 1.5f, { 15.5,28 }, direction, 0);
+        }
+        else {
+            
+            sprites->overrideCurrentFrame(state, position, 1.5f, { 15.5,28 }, direction, 1);
+        }
     }
 }

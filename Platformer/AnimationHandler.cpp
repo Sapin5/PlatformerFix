@@ -43,6 +43,26 @@ void AnimationHandler::animate(int state, Vector2 position, float scale,
 		}
 		frameTime = 0.0f;
 	}
+
+	DrawTexturePro(playerSprites, sourceRec, destRec, origin, 0.0f, WHITE);
+}
+
+void AnimationHandler::overrideCurrentFrame(int state, Vector2 position, float scale,
+	Vector2 adjustOrigin, int direction, int frame) {
+
+	Rectangle sourceRec = { frame * playerSpriteSize.x,
+							state * playerSpriteSize.y,
+							playerSpriteSize.x * direction,
+							playerSpriteSize.y };
+
+
+	Rectangle destRec = { position.x, position.y,
+							playerSpriteSize.x * scale,
+							playerSpriteSize.y * scale };
+
+
+	Vector2 origin = { adjustOrigin.x, adjustOrigin.y };
+
 	DrawTexturePro(playerSprites, sourceRec, destRec, origin, 0.0f, WHITE);
 }
 

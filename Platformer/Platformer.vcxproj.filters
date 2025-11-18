@@ -83,8 +83,5 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="Assets\Maps\tilemap_packed_data.tsj">
-      <Filter>Header Files</Filter>
-    </None>
   </ItemGroup>
 </Project>
