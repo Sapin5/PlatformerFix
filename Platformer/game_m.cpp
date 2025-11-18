@@ -1,8 +1,16 @@
 #include "game_m.hpp"
+
 namespace Platformer {
 
-	player playerOne(true, Vector2{ 100, 100 }, 40, 40, "player", "idk");
+	player playerOne(true, Vector2{ 100, 500 }, 18, 18, "player", "idk");
 	std::vector<int> playerFrames{ 4, 6, 3, 6, 3, 4 };
+
+
+	GameManager::GameManager() {
+		playerOne.onShake = [this](float duration, float magnitude) {
+			this->triggerShake(duration, magnitude);
+			};
+	};
 
 	void GameManager::createMapCollisions() {
 		gameScreen.newMap.fillStruct();
@@ -43,7 +51,6 @@ namespace Platformer {
 
 		if (gameScreen.getState() == Platformer::Screen::GameState::Play) {
 			BeginMode2D(cam);
-			gameScreen.drawPlayer(playerOne);
 
 			for (int i = 0; i < tiles.size(); i++) {
 				gameScreen.drawActor(tiles[i]);
@@ -51,6 +58,8 @@ namespace Platformer {
 
 			gameScreen.newMap.drawMapTiles();
 			gameScreen.newMap.drawMap();
+
+			gameScreen.drawPlayer(playerOne);
 			EndMode2D();
 		}
 	}
@@ -71,12 +80,37 @@ namespace Platformer {
 		if (gameScreen.getState() == Platformer::Screen::GameState::Play) {
 			playerOne.update();
 
-			cam.target = { (playerOne.getPosition().x - gameScreen.screen_width),
-						   static_cast<float>(playerOne.getPosition().y - (gameScreen.screen_height / 1.5)) };
+			// Camera offset stays at the center of the screen
+			cam.offset = { gameScreen.screen_width / 2.0f,
+						   gameScreen.screen_height / 2.0f };
+			cam.zoom = 1.5f;
+			// Target position for the camera (player position with slight vertical offset)
+			Vector2 targetPos = { playerOne.getPosition().x - 100,
+								  playerOne.getPosition().y - 100};
 
+			// Smoothly interpolate the camera's current target towards the player's position
+			float cameraSpeed = 0.1f; // Adjust this value for more/less delay
+			cam.target.x += (targetPos.x - cam.target.x) * cameraSpeed;
+			cam.target.y += (targetPos.y - cam.target.y) * cameraSpeed;
+
+			// Collision checks
 			for (int i = 0; i < tiles.size(); i++) {
 				playerOne.collisionCheck(tiles[i].getCollider());
 			}
+
+			if (shakeDuration > 0.0f) {
+				float offsetX = ((float)rand() / RAND_MAX * 2.0f - 1.0f) * shakeMagnitude;
+				float offsetY = ((float)rand() / RAND_MAX * 2.0f - 1.0f) * shakeMagnitude;
+				cam.target.x += offsetX;
+				cam.target.y += offsetY;
+
+				shakeDuration -= GetFrameTime();
+			}
 		}
+	}
+
+	void GameManager::triggerShake(float duration, float magnitude) {
+		shakeDuration = duration;
+		shakeMagnitude = magnitude;
 	}
 }

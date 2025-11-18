@@ -4,6 +4,7 @@
 #include "BaseClass.hpp"
 #include "Collider.hpp"
 #include <string>
+#include <functional>
 #include "AnimationHandler.hpp"
 
 class Actor : public Base{
@@ -14,18 +15,20 @@ protected:
 	Collider collider;
 	AnimationHandler* sprites = nullptr;
 	bool blankSprite{ false };
+	bool isGrounded{ false };
 
 public:
+	std::function<void(float, float)> onShake;
 	Vector2 position{};
 	Actor() = default;
 
-	Actor(bool enableGravity, Vector2 position, int scaleX, int scaleY, 
-			std::string tag, bool collisionEnabaled, bool debug) : Base( enableGravity ) {
+	Actor(bool enableGravity, Vector2 position, int scaleX, int scaleY,
+		std::string tag, bool collisionEnabaled, bool debug) : Base(enableGravity) {
 		this->position = position;
 		this->scaleX = scaleX;
 		this->scaleY = scaleY;
 		this->tag = tag;
-		this->collider = Collider(position, {(float)scaleX, (float)scaleY}, collisionEnabaled, debug);
+		this->collider = Collider(position, { (float)scaleX, (float)scaleY }, collisionEnabaled, debug);
 	}
 
 	virtual void drawActor();

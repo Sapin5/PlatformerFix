@@ -14,7 +14,7 @@ namespace Platformer {
 
 	class GameManager {
 	public:
-		GameManager() = default;
+		GameManager();
 
 		void loadAllSprites();
 		void drawScreen(Camera2D& cam);
@@ -30,6 +30,11 @@ namespace Platformer {
 		std::unordered_map<int, bool> idk;
 
 		std::vector<Actor> tiles;
+
+		float shakeDuration = 0.0f;
+		float shakeMagnitude = 0.0f;
+
+		void triggerShake(float duration, float magnitude);
 	};
 }
 #endif // !GAMEMANAGEr

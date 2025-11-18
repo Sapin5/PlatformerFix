@@ -11,12 +11,9 @@ private:
 	Vector2 scale{ 100.0f, 100.0f };
 	//std::vector<std::string> canCollide;
 	bool debug{ false };
-
 	bool collided{ false };
 
-
 public:
-
 	Collider() = default;
 
 	//, std::vector<std::string> canCollide
@@ -36,11 +33,15 @@ public:
 		bool right{ false };
 	};
 
+	CollisionFlags flags;
+
 	void createCollider();
 
 	void enableCollider(bool enabled);
 
 	void updatePosition(Vector2& newPosition);
+
+	void populateFlags(Vector2 intersections, Vector2 delta);
 
 	bool checkCollisions(Collider& other);
 
@@ -48,6 +49,7 @@ public:
 
 	Vector2 getPosition() const;
 	Vector2 getScale() const;
+
 };
 
 

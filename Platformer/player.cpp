@@ -9,26 +9,40 @@ void player::movePlayer(char key) {
 
     int newState = 0;
 
+    if (collider.flags.bottom) {
+        jump = true;
+    }
+    
+    velocity.x = 0;
+
+    std::cout << collider.flags.left;
     if (moveRight && !moveLeft) {
-        position.x += 0.5f;
-        newState = 1;
+        velocity.x = 150;
         direction = 1;
+        newState = 1;
+        collider.flags.left = false;
     }
 
-    if (moveLeft && !moveRight) {
-        position.x -= 0.5f;
-        newState = 1;
+    if (moveLeft && !moveRight ) {
+        velocity.x = -150;
         direction = -1;
+        newState = 1;
+
     }
 
     if (moveDown) {
-        position.y += 0.5f;
+        velocity.y = 150;
         newState = 1;
     }
 
-    if (IsKeyPressed(KEY_SPACE)) {
+    if (IsKeyPressed(KEY_SPACE) && jump) {
         applyForce(Vector2{ 0, -200 });
-        std::cout << "Jumped";
+        jump = false;
+        collider.flags.bottom = false;
+
+        if (onShake) {
+            onShake(0.4f, 12.0f);
+        }
     }
 
     if (newState != state) {
@@ -37,12 +51,13 @@ void player::movePlayer(char key) {
     }
 }
 
+
 void player::drawActor(){
     this->collider.createCollider();
     if (sprites == NULL) {
         DrawRectangle(static_cast<int>(position.x), static_cast<int>(position.y), scaleX, scaleY, GREEN);
     }
     else {
-        sprites->animate(state, position, 2.5f, Vector2 { 20, 38 }, direction);
+        sprites->animate(state, position, 1.5f, Vector2 { 15.5, 28 }, direction);
     }
 }

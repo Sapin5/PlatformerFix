@@ -4,7 +4,7 @@
 int main()
 {
      Platformer::GameManager Game;
-     Game.loadGameMap("Assets/Maps/Demomap3.tmj");
+     Game.loadGameMap("Assets/Maps/GameMap.tmj");
 
      Camera2D cam{ 0 };
      cam.offset = { GetScreenWidth() / 2.0f, GetScreenHeight() / 2.0f };
@@ -13,8 +13,9 @@ int main()
      std::vector<int> screenSize { Game.gameScreen.newMap.getTileShape() };
 
      SetTargetFPS(60);
-
-     InitWindow(size[0] * screenSize[0], size[1] * screenSize[1], "Platformer");
+     
+     //size[0] * screenSize[0], size[1] * screenSize[1]
+     InitWindow(1000, 600, "Platformer");
 
      Game.loadAllSprites();
      Game.createMapCollisions();
@@ -22,12 +23,14 @@ int main()
      while (!WindowShouldClose()) {
          BeginDrawing();
          ClearBackground(RAYWHITE);
-         Game.updateGame(cam);
-         Game.drawScreen(cam);
+
          Game.movePlayer();
+         Game.updateGame(cam);
+         Game.drawScreen(cam);  
 
          EndDrawing();
      }
+
      CloseWindow();
      return 0;
 }

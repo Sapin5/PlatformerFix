@@ -14,56 +14,30 @@ public:
 	float frameSpeed{ 0.1f };
 	Vector2 playerSpriteSize;
 
-	void loadSpriteSheet(std::string path, int x, std::vector<int> y) {
+	/// <summary>
+	/// Loads sprite sheet based on file path.
+	/// Sub divides sheet into rows and columns
+	/// </summary>
+	/// <param name="path">: Path to Sprite File</param>
+	/// <param name="x">: Represents the total rows in the Sprite Sheet</param>
+	/// <param name="y">: Set to the number of columns per row</param>
+	void loadSpriteSheet(std::string path, int x, std::vector<int> y);
 
-		playerSprites = LoadTexture(path.c_str());
-		playerSpriteSize = { playerSprites.width / static_cast<float>(x), 
-							 playerSprites.height / static_cast<float>(y.size()) };
+	/// <summary>
+	/// Enabled animation to play based on current state for given actor
+	/// </summary>
+	/// <param name="state">: Used to access specific row along the sprite sheet</param>
+	/// <param name="position">: Position at which the sprite will appear in the world </param>
+	/// <param name="scale">: Scale up or down the sprite</param>
+	/// <param name="adjustOrigin">: Readjust sprites position to recenter if needed</param>
+	/// <param name="direction">: Allows sprite to be mirrored along the Y axis</param>
+	void animate(int state, Vector2 position, float scale,
+				 Vector2 adjustOrigin, int direction);
 
-		spriteSheetData.resize(x, std::vector<int>(2, 0));
-
-		for (int i = 0; i < spriteSheetData.size(); i++) {
-			spriteSheetData[i][0] = i;
-		}
-
-		for (int j = 0; j < std::min(spriteSheetData.size(), y.size()); j++) {
-			spriteSheetData[j][1] = y[j];
-		}
-	}
-
-	void animate(int state, Vector2 position, float scale , 
-				 Vector2 adjustOrigin, int direction) {
-
-		Rectangle sourceRec = { currentFrame * playerSpriteSize.x,
-								state * playerSpriteSize.y,
-								playerSpriteSize.x*direction, 
-								playerSpriteSize.y };
-
-
-		Rectangle destRec = { position.x, position.y,
-							  playerSpriteSize.x * scale, 
-							  playerSpriteSize.y * scale };
-
-
-		Vector2 origin = { adjustOrigin.x, adjustOrigin.y };
-
-
-		frameTime += GetFrameTime();
-		if (frameTime >= frameSpeed) {
-			currentFrame++;
-			if (currentFrame >= spriteSheetData[state][1])
-			{
-				currentFrame = 0;
-			}
-			frameTime = 0.0f;
-		}
-		DrawTexturePro(playerSprites, sourceRec, destRec, origin, 0.0f, WHITE);
-	}
-
-	void resetCurrentFrame() {
-		currentFrame = 0;
-		frameTime = 0.0f;
-	}
+	/// <summary>
+	/// Call when transitioning between states to avoid sprite not appearing properly
+	/// </summary>
+	void resetCurrentFrame();
 };
 
 #endif // !ANIMHANDLER_H

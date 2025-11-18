@@ -3,11 +3,8 @@
 
 void Actor::drawActor() {
 	this->collider.createCollider();
-	if (sprites == NULL) {
+	if (blankSprite) {
 		DrawRectangle(static_cast<int>(position.x), static_cast<int>(position.y), scaleX, scaleY, GREEN);
-	}
-	else if(!blankSprite){
-		DrawRectangle(static_cast<int>(position.x), static_cast<int>(position.y), scaleX, scaleY, BLACK);
 	}
 }
 
