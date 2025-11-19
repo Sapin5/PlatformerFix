@@ -50,6 +50,7 @@ void Actor::collisionCheck(Collider& other) {
 			velocity.y = 0;
 		}
 	}
+
 }
 
 Collider& Actor::getCollider() {

@@ -15,11 +15,14 @@ namespace Platformer{
 		int height{ 150 };
 		int xPos{ 150 };
 		int yPos{ 150 };
+		int fontSize{ 20 };
+		std::string text{ " " };
 		
 	public:
 		Button() = default;
 
-		Button(int width, int height, int xPos, int yPos, Color normal,Color hovered) {
+		Button(int width, int height, int xPos, int yPos, 
+			   Color normal, Color hovered, std::string text = "", int fontSize = 20) {
 			 
 			 this->width = width;
 			 this->height = height;
@@ -30,6 +33,8 @@ namespace Platformer{
 			 this->hovered = hovered;
 			 this->C = normal;
 			 this->buttonValue = buttonValue;
+			 this->text = text;
+			 this->fontSize = fontSize;
 		}
 		
 		/// <summary>

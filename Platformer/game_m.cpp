@@ -33,10 +33,7 @@ namespace Platformer {
 		gameScreen.loadTileMap();
 	}
 
-	/*
-	* REMEMBER TO MODIFY THIS TO EXTRACT MAP DATA TO CREATE ACTORS LATER
-	* PLEASE, IT TOOK YOU WAY TOO LONG TO THINK OF THIS
-	*/
+
 	void GameManager::loadGameMap(const std::string& filePath) {
 		gameScreen.loadGameMap(filePath);
 	}
@@ -46,7 +43,6 @@ namespace Platformer {
 	/// </summary>
 	void GameManager::drawScreen(Camera2D& cam){
 		key = Platformer::getKeyPressed();
-		gameScreen.update(key);
 		gameScreen.setScreen();
 
 		if (gameScreen.getState() == Platformer::Screen::GameState::Play) {
@@ -57,9 +53,13 @@ namespace Platformer {
 			}
 
 			gameScreen.newMap.drawMapTiles();
-			gameScreen.newMap.drawMap();
+
+			// Uncomment to display tilemap data on screen
+			//gameScreen.newMap.drawMap();
 
 			gameScreen.drawPlayer(playerOne);
+
+			updateGame(cam);
 			EndMode2D();
 		}
 	}
@@ -68,7 +68,9 @@ namespace Platformer {
 	/// Pass keyboard input into player to move around
 	/// </summary>
 	void GameManager::movePlayer() {
-		playerOne.movePlayer(key);
+		if (!pause) {
+			playerOne.movePlayer(key); 
+		}
 	}
 
 	/// <summary>
@@ -78,33 +80,41 @@ namespace Platformer {
 	void GameManager::updateGame(Camera2D& cam) {
 
 		if (gameScreen.getState() == Platformer::Screen::GameState::Play) {
-			playerOne.update();
-
-			// Camera offset stays at the center of the screen
-			cam.offset = { gameScreen.screen_width / 2.0f,
-						   gameScreen.screen_height / 2.0f };
-			cam.zoom = 1.5f;
-			// Target position for the camera (player position with slight vertical offset)
-			Vector2 targetPos = { playerOne.getPosition().x - 100,
-								  playerOne.getPosition().y - 100};
-
-			// Smoothly interpolate the camera's current target towards the player's position
-			float cameraSpeed = 0.1f; // Adjust this value for more/less delay
-			cam.target.x += (targetPos.x - cam.target.x) * cameraSpeed;
-			cam.target.y += (targetPos.y - cam.target.y) * cameraSpeed;
-
-			// Collision checks
-			for (int i = 0; i < tiles.size(); i++) {
-				playerOne.collisionCheck(tiles[i].getCollider());
+			if (IsKeyPressed(KEY_P) && !pause) {
+				std::cout << "paused";
+				pause = true;
 			}
+			else if(IsKeyPressed(KEY_P) && pause) {
+				std::cout << "Unpaused";
+				pause = false;
+			}
+			 
+			if (!pause) {
+				playerOne.update();
 
-			if (shakeDuration > 0.0f) {
-				float offsetX = (static_cast<float>(rand()) / RAND_MAX * 2.0f - 1.0f) * shakeMagnitude;
-				float offsetY = (static_cast<float>(rand()) / RAND_MAX * 2.0f - 1.0f) * shakeMagnitude;
-				cam.target.x += offsetX;
-				cam.target.y += offsetY;
+				// Target position for the camera (player position)
+				Vector2 targetPos = { playerOne.getPosition().x ,
+									  playerOne.getPosition().y };
 
-				shakeDuration -= GetFrameTime();
+				// Smoothly interpolate the camera's current target towards the player's position
+				float cameraSpeed = 0.1f; // Adjust this value for more/less delay
+				cam.target.x += (targetPos.x - cam.target.x) * cameraSpeed;
+				cam.target.y += (targetPos.y - cam.target.y) * cameraSpeed;
+
+				// Collision checks
+				for (int i = 0; i < tiles.size(); i++) {
+					playerOne.collisionCheck(tiles[i].getCollider());
+				}
+
+				if (shakeDuration > 0.0f) {
+					float offsetX = (static_cast<float>(rand()) / RAND_MAX * 2.0f - 1.0f) * shakeMagnitude;
+					float offsetY = (static_cast<float>(rand()) / RAND_MAX * 2.0f - 1.0f) * shakeMagnitude;
+					cam.target.x += offsetX;
+					cam.target.y += offsetY;
+
+					shakeDuration -= GetFrameTime();
+				}
+
 			}
 		}
 	}

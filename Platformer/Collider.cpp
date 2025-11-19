@@ -19,8 +19,6 @@ void Collider::updatePosition(Vector2& newPosition) {
 }
 
 bool Collider::checkCollisions(Collider& other){
-
-
     if (!enabled || !other.enabled) return false;
     
     bool collisionX = static_cast<int>(position.x) < static_cast<int>(other.position.x) 
@@ -56,17 +54,19 @@ std::vector<float> Collider::adjustPostion(Collider& other) {
 
 
 void Collider::populateFlags(Vector2 intersections, Vector2 delta) {
+    
+    // This does not work as intended since the goddamn flags wont clear
 
     // Determine the collision side based on smaller overlap
     if (intersections.x < intersections.y) {
         // Horizontal collision
         if (delta.x > 0) {
-            // Other is to the right
+            // Other collider is to the right
             flags.right = true;
             flags.left = false;
             
         } else {
-            // Other is to the left
+            // Other collider is to the left
             flags.left = true;
             flags.right = false;
         }
@@ -74,11 +74,11 @@ void Collider::populateFlags(Vector2 intersections, Vector2 delta) {
     else {
         // Vertical collision
         if (delta.y > 0) {
-            // Other is below
+            // Other collider is below
             flags.bottom = true;
         }
         else {
-            // Other is above
+            // Other collider is above
             flags.top = true;
         }
     }

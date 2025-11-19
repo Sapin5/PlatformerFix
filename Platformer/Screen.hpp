@@ -9,7 +9,6 @@ namespace Platformer {
 	public:
 		int screen_height{ 400 };
 		int screen_width{ 400 };
-		bool pause{ false };
 		MapParser newMap;
 
 		enum class GameState {Home, Win, Loss, Play};
@@ -31,17 +30,11 @@ namespace Platformer {
 
 
 		/// <summary>
-		/// Returns a desired screen size. Unused
+		/// Sets a desired screen size
 		/// </summary>
 		/// <param name="screenX"></param>
 		/// <param name="screenY"></param>
 		void setScreenSize(int screenX, int screenY);
-
-		/// <summary>
-		/// Checks for key input during gameplay that is not movement related
-		/// </summary>
-		/// <param name="ch"></param>
-		void update(char ch);
 
 		/// <summary>
 		/// Changes screen based on game state
@@ -60,7 +53,11 @@ namespace Platformer {
 		/// </summary>
 		/// <param name="actor"></param>
 		void drawActor(Actor& actor);
-		
+
+		int getScreenWidth();
+
+		int getScreenHeight();
+
 		Screen() = default;
 	private:
 		

@@ -14,6 +14,8 @@ namespace Platformer {
 
 	class GameManager {
 	public:
+		bool pause{ false };
+
 		GameManager();
 
 		/// <summary>
@@ -51,6 +53,7 @@ namespace Platformer {
 		/// Creates collisions in game world for player to walk around on
 		/// </summary>
 		void createMapCollisions();
+
 		char key{ };
 
 		Screen gameScreen;

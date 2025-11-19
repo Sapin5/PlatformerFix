@@ -3,8 +3,6 @@
 #include <iostream>
 
 namespace Platformer {
-	Platformer::Button playButton(100, 100, 150, 150, BLUE, RED);
-	Platformer::Button homeButton(100, 100, 150, 150, WHITE, BLACK);
 
 	void Screen::setScreenSize(int screenX, int screenY) {
 		screen_height = screenY;
@@ -15,17 +13,15 @@ namespace Platformer {
 		return currentState;
 	}
 
-	void Screen::update(char ch) {
-		if (ch == 'p') {
-			pause = true;
-		}
-	}
-
 	void Screen::setScreen() {
+		std::string play = "Play";
+
+		Platformer::Button playButton(300, 100, GetScreenWidth() / 3, GetScreenHeight() / 3, BLUE, RED, play, 100);
+		Platformer::Button homeButton(100, 100, 150, 150, WHITE, BLACK);
 		switch (currentState) {
 		case  GameState::Home:
-			if (playButton.drawButton()) currentState = GameState::Play;
 			ClearBackground(RAYWHITE);
+			if (playButton.drawButton()) currentState = GameState::Play;
 			break;
 		case GameState::Play:
 			ClearBackground(RAYWHITE);
@@ -56,5 +52,13 @@ namespace Platformer {
 
 	void Screen::loadTileMap() {
 		newMap.loadTileMap();
+	}
+
+	int Screen::getScreenWidth() {
+		return screen_width;
+	}
+
+	int Screen::getScreenHeight() {
+		return screen_height;
 	}
 }

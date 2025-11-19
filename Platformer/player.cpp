@@ -21,7 +21,6 @@ void player::movePlayer(char key) {
         velocity.x = 150;
         direction = 1;
         newState = 1;
-        collider.flags.left = false;
     }
 
     if (moveLeft && !moveRight ) {
@@ -52,6 +51,10 @@ void player::movePlayer(char key) {
         newState = 2;
     }
 
+    if (velocity.y > 50 || velocity.y < -50) {
+        newState = 2;
+    }
+
     if (newState != state) {
         state = newState;
         if (sprites) sprites->resetCurrentFrame();
@@ -68,8 +71,8 @@ void player::drawActor() {
         DrawRectangle((int)position.x, (int)position.y, scaleX, scaleY, GREEN);
         return;
     }
-    if (grounded) {
-       
+    
+    if (velocity.y < 50 && velocity.y > -50 && grounded) {
         if (velocity.x == 0) {
             sprites->animate(state, position, 1.5f, { 15.5,28 }, direction);
         }
@@ -78,8 +81,6 @@ void player::drawActor() {
             sprites->animate(state, position, 1.5f, { 15.5,28 }, direction);
         }
     }
-
-    
     else {
         if (velocity.y < 0) {
             

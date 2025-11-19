@@ -23,7 +23,9 @@ namespace Platformer {
 	}
 
 	bool Button::drawButton() {
+		bool hovering = hoveredOver();
 		DrawRectangle(xPos, yPos, width, height, C);
-		return hoveredOver();
+		DrawText(text.c_str(), xPos + (width * 0.25), yPos + (height * 0.15), width * 0.25, BLACK);
+		return hovering;
 	}
 }
