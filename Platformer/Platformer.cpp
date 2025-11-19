@@ -22,6 +22,8 @@ int main()
      cam.offset = { GetScreenWidth() / 2.0f, GetScreenHeight() / 2.0f };
      cam.zoom = 2.0f;
 
+
+     Game.createButtons();
      Game.loadAllSprites();
      Game.createMapCollisions();
 

@@ -61,6 +61,12 @@ void player::movePlayer(char key) {
     }
 }
 
+void player::resetPos() {
+    position = initPos;
+    toggleGravity(true);
+    jump = false;
+}
+
 
 void player::drawActor() {
     this->collider.createCollider();

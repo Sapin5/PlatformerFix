@@ -3,10 +3,12 @@
 #include "raylib.h"
 #include "player.hpp"
 #include "MapParser.hpp"
+#include "Button.hpp"
 
 namespace Platformer {
 	class Screen {
 	public:
+
 		int screen_height{ 400 };
 		int screen_width{ 400 };
 		MapParser newMap;
@@ -14,6 +16,8 @@ namespace Platformer {
 		enum class GameState {Home, Win, Loss, Play};
 		GameState currentState{ GameState::Home };
 		GameState getState() const;
+
+
 
 
 		/// <summary>
@@ -57,6 +61,8 @@ namespace Platformer {
 		int getScreenWidth();
 
 		int getScreenHeight();
+
+		void setState(GameState state);
 
 		Screen() = default;
 	private:

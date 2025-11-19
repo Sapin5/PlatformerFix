@@ -2,12 +2,12 @@
 
 namespace Platformer {
 
-	player playerOne(true, Vector2{ 100, 500 }, 18, 18, "player", "idk");
+	//player playerOne(true, Vector2{ 100, 500 }, 18, 18, "player", "idk");
 	std::vector<int> playerFrames{ 4, 6, 3, 6, 3, 4 };
 
-
 	GameManager::GameManager() {
-		playerOne.onShake = [this](float duration, float magnitude) {
+		playerOne = std::make_unique<player>(true, Vector2{ 50, 700 }, 18, 18, "player", "idk");
+		playerOne->onShake = [this](float duration, float magnitude) {
 			this->triggerShake(duration, magnitude);
 			};
 	};
@@ -29,14 +29,20 @@ namespace Platformer {
 	void GameManager::loadAllSprites() {
 		AnimationHandler* ptr = &playerAnimation;
 		playerAnimation.loadSpriteSheet("Assets/Sprites/Characters/MinifolksHumans/Outline/MiniSwordMan.png", 6, playerFrames);
-		playerOne.setAnimation(ptr);
+		playerOne->setAnimation(ptr);
 		gameScreen.loadTileMap();
+	}
+
+	void GameManager::createButtons() {
+		reset = std::make_unique<Button>(GetScreenWidth() / 2, GetScreenHeight() / 5, GetScreenWidth() / 4, GetScreenHeight() / 4, BLUE, RED, "Reset", 100);
+		home =  std::make_unique<Button>(GetScreenWidth() / 2, GetScreenHeight() / 5, GetScreenWidth() / 4, GetScreenHeight() / 2, BLUE, RED, "Home", 100);
 	}
 
 
 	void GameManager::loadGameMap(const std::string& filePath) {
 		gameScreen.loadGameMap(filePath);
 	}
+
 
 	/// <summary>
 	/// Draw player sprites during play state
@@ -57,10 +63,28 @@ namespace Platformer {
 			// Uncomment to display tilemap data on screen
 			//gameScreen.newMap.drawMap();
 
-			gameScreen.drawPlayer(playerOne);
+			gameScreen.drawPlayer(*playerOne);
 
 			updateGame(cam);
 			EndMode2D();
+
+			if (pause) {
+				DrawRectangle(GetScreenWidth()/8, GetScreenHeight()/8, GetScreenWidth()/1.4, GetScreenHeight() / 1.4, Color {142, 142, 142, 200});
+				if (reset->drawButton()) {
+					pause = false;
+					playerOne->resetPos();
+					gameScreen.setState(Screen::GameState::Play);
+					timer = 0;
+				}
+
+				if (home->drawButton()) {
+					pause = false;
+					playerOne->resetPos();
+					gameScreen.setState(Screen::GameState::Home);
+					timer = 0;
+				}
+
+			}
 		}
 	}
 	
@@ -69,7 +93,7 @@ namespace Platformer {
 	/// </summary>
 	void GameManager::movePlayer() {
 		if (!pause) {
-			playerOne.movePlayer(key); 
+			playerOne->movePlayer(key); 
 		}
 	}
 
@@ -81,20 +105,18 @@ namespace Platformer {
 
 		if (gameScreen.getState() == Platformer::Screen::GameState::Play) {
 			if (IsKeyPressed(KEY_P) && !pause) {
-				std::cout << "paused";
 				pause = true;
 			}
 			else if(IsKeyPressed(KEY_P) && pause) {
-				std::cout << "Unpaused";
 				pause = false;
 			}
 			 
 			if (!pause) {
-				playerOne.update();
-
+				timer += GetFrameTime();	
+				playerOne->update();
 				// Target position for the camera (player position)
-				Vector2 targetPos = { playerOne.getPosition().x ,
-									  playerOne.getPosition().y };
+				Vector2 targetPos = { playerOne->getPosition().x ,
+									  playerOne->getPosition().y };
 
 				// Smoothly interpolate the camera's current target towards the player's position
 				float cameraSpeed = 0.1f; // Adjust this value for more/less delay
@@ -103,7 +125,7 @@ namespace Platformer {
 
 				// Collision checks
 				for (int i = 0; i < tiles.size(); i++) {
-					playerOne.collisionCheck(tiles[i].getCollider());
+					playerOne->collisionCheck(tiles[i].getCollider());
 				}
 
 				if (shakeDuration > 0.0f) {
@@ -116,6 +138,9 @@ namespace Platformer {
 				}
 
 			}
+
+			DrawText(TextFormat("Time: %02.02f ms", timer), cam.target.x - GetScreenWidth() * 0.225
+				, cam.target.y - GetScreenHeight() * 0.225, 20, BLACK);
 		}
 	}
 

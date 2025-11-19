@@ -13,6 +13,10 @@ namespace Platformer {
 		return currentState;
 	}
 
+	void Screen::setState(GameState state)  {
+		currentState = state;
+	}
+
 	void Screen::setScreen() {
 		std::string play = "Play";
 

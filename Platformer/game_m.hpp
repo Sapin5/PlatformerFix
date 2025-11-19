@@ -16,6 +16,11 @@ namespace Platformer {
 	public:
 		bool pause{ false };
 
+		std::unique_ptr<Button> reset = nullptr;
+		std::unique_ptr<Button> home = nullptr;
+		std::unique_ptr<player> playerOne = nullptr;
+
+		float timer{ 0 };
 		GameManager();
 
 		/// <summary>
@@ -72,6 +77,9 @@ namespace Platformer {
 		/// <param name="duration"></param>
 		/// <param name="magnitude"></param>
 		void triggerShake(float duration, float magnitude);
+	
+	
+		void createButtons();
 	};
 }
 #endif // !GAMEMANAGEr

@@ -10,14 +10,16 @@ public:
 	std::string name{""};
 	bool jump{ false };
 
+	Vector2 initPos{ 0,0 };
+
 	player() = default;
 
 
 	player(bool enableGravity, Vector2 position, int scaleX, int scaleY, std::string tag, std::string name)
-		: Actor(enableGravity, position, scaleX, scaleY, tag, true, true) {
+		: Actor(enableGravity, position, scaleX, scaleY, tag, true, false) {
 		this->name = name;
+		this->initPos = position;
 	}
-
 
 	/// <summary>
 	/// Move the player based on key pressed
@@ -31,7 +33,8 @@ public:
 	/// </summary>
 	void drawActor() override;
 
-	
+	void resetPos() ;
+
 };
 
 #endif // !PLAYER_H
