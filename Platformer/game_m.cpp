@@ -48,26 +48,37 @@ namespace Platformer {
 	/// Draw player sprites during play state
 	/// </summary>
 	void GameManager::drawScreen(Camera2D& cam){
+		// Receives Key inputs (Unused)
+		// Unused cause it was causing some issues I needed to fix
 		key = Platformer::getKeyPressed();
+
+		// Retreives current game screen to display accurate game state
 		gameScreen.setScreen();
 
+		// Enables game logic for for when entering play state
 		if (gameScreen.getState() == Platformer::Screen::GameState::Play) {
 			BeginMode2D(cam);
 
+			// Draws tiles on screen
+			// Game is set up a bit weird so this just draws the colliders on screen
 			for (int i = 0; i < tiles.size(); i++) {
 				gameScreen.drawActor(tiles[i]);
 			}
 
+			// Draws tiles on screen
 			gameScreen.newMap.drawMapTiles();
 
 			// Uncomment to display tilemap data on screen
 			//gameScreen.newMap.drawMap();
 
+			// Draws player 
 			gameScreen.drawPlayer(*playerOne);
 
 			updateGame(cam);
 			EndMode2D();
 
+
+			// Draws pause menu when pause is enabled
 			if (pause) {
 				DrawRectangle(GetScreenWidth()/8, GetScreenHeight()/8, GetScreenWidth()/1.4, GetScreenHeight() / 1.4, Color {142, 142, 142, 200});
 				if (reset->drawButton()) {
@@ -104,13 +115,17 @@ namespace Platformer {
 	void GameManager::updateGame(Camera2D& cam) {
 
 		if (gameScreen.getState() == Platformer::Screen::GameState::Play) {
+
+			// Allows players to toggle pause on/off
 			if (IsKeyPressed(KEY_P) && !pause) {
 				pause = true;
 			}
 			else if(IsKeyPressed(KEY_P) && pause) {
 				pause = false;
 			}
-			 
+			
+			// Enables game logic on/off depending on game state
+			// Pause or unpaused
 			if (!pause) {
 				timer += GetFrameTime();	
 				playerOne->update();
@@ -128,6 +143,9 @@ namespace Platformer {
 					playerOne->collisionCheck(tiles[i].getCollider());
 				}
 
+
+				// Enable Camera shake for N duration
+				// Camera shake strength also depends on shake magnitude passed in
 				if (shakeDuration > 0.0f) {
 					float offsetX = (static_cast<float>(rand()) / RAND_MAX * 2.0f - 1.0f) * shakeMagnitude;
 					float offsetY = (static_cast<float>(rand()) / RAND_MAX * 2.0f - 1.0f) * shakeMagnitude;
@@ -139,6 +157,7 @@ namespace Platformer {
 
 			}
 
+			// Draw timer on screen in top left corner
 			DrawText(TextFormat("Time: %02.02f ms", timer), cam.target.x - GetScreenWidth() * 0.225
 				, cam.target.y - GetScreenHeight() * 0.225, 20, BLACK);
 		}
